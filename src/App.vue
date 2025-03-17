@@ -1,7 +1,7 @@
 <template>
   <MainHeader/>
   <div class="container">
-    <UserBalance/>
+    <UserBalance :balance="balance"/>
     <IncomeExpenses/>
     <TransactionList :transactions="transactions"/>
     <AddTransaction/>
@@ -15,7 +15,13 @@ import IncomeExpenses from './components/IncomeExpenses.vue';
 import TransactionList from './components/TransactionList.vue';
 import AddTransaction from './components/AddTransaction.vue';
 
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+
+import { sum } from 'lodash';
+
+const balance = computed(() => {
+  return sum(transactions.value.map(transaction => transaction.amount));
+});
 
 const transactions = ref([
         { id: 1, text: 'Flower', amount: -19.99 },
