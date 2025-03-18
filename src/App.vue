@@ -2,7 +2,7 @@
   <MainHeader/>
   <div class="container">
     <UserBalance :balance="balance"/>
-    <IncomeExpenses/>
+    <IncomeExpenses :income="income" :expenses="expenses"/>
     <TransactionList :transactions="transactions"/>
     <AddTransaction/>
   </div>
@@ -29,4 +29,12 @@ const transactions = ref([
         { id: 3, text: 'Book', amount: -10 },
         { id: 4, text: 'Camera', amount: 150 }
     ]);
+
+const income = computed(() => {
+  return sum(transactions.value.filter(transaction => transaction.amount > 0).map(transaction => transaction.amount));
+});
+
+const expenses = computed(() => {
+  return Math.abs(sum(transactions.value.filter(transaction => transaction.amount < 0).map(transaction => transaction.amount)));
+});
 </script>
