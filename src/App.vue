@@ -5,7 +5,7 @@
   <div class="container">
     <UserBalance :balance="balance" />
     <IncomeExpenses :income="income" :expenses="expenses" />
-    <TransactionList :transactions="transactions" />
+    <TransactionList :transactions="transactions" @transactionDeleted="handleTransactionDeleted"/>
     <AddTransaction @submitTransaction="handleSubmitTransaction"/>
   </div>
 
@@ -55,5 +55,14 @@
     });
 
     toast.success("Transaction added succesfully");
-};
+  };
+
+  const handleTransactionDeleted = (id) => {
+    transactions.value = transactions.value.filter(
+      (transaction) => transaction.id !== id
+    );
+
+    toast.success('Transaction deleted succesfully');
+  };
+
 </script>
